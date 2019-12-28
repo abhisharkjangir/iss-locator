@@ -31,7 +31,7 @@ export const LOADING_STOP = 'LOADING_STOP'
 export function initISSPosition () {
   return function (dispatch) {
     dispatch({ type : 'LOADING_START' })
-    return fetch(`https://api.open-notify.org/iss-now.json`).then((response) => {
+    return fetch(`http://api.open-notify.org/iss-now.json`).then((response) => {
       response.json().then(json => {
         if (json.message === 'success') {
           dispatch({ type: MAP_ADD_MARKER, payload: [parseFloat(json.iss_position.latitude), parseFloat(json.iss_position.longitude)] })
@@ -47,7 +47,7 @@ export function initISSPosition () {
 
 export function whoIsInSpace () {
   return function (dispatch) {
-    return fetch(`https://api.open-notify.org/astros.json`).then((response) => {
+    return fetch(`http://api.open-notify.org/astros.json`).then((response) => {
       response.json().then(json => {
         if (json.message === 'success') { dispatch({ type: UPDATE_PEOPLE_IN_SPACE, payload: json.people }) } else console.log(json)
       })
@@ -59,7 +59,7 @@ export function whoIsInSpace () {
 
 export function whenWillPassThroughYou (c) {
   return function (dispatch) {
-    return fetch(`https://api.open-notify.org/iss-pass.json?lat=${c.lat}&lon=${c.long}`, { mode: 'cors' })
+    return fetch(`http://api.open-notify.org/iss-pass.json?lat=${c.lat}&lon=${c.long}`, { mode: 'cors' })
       .then((response) => {
         response.json().then(json => {
           dispatch({ type: SAVE_WHEN_WILL_PASS_THROUGH, payload: json })
